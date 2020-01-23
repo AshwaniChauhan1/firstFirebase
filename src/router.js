@@ -7,7 +7,6 @@ Vue.use(Router)
 const router = new Router({
   mode: 'hash',
   routes: [
-    // { path: '/', component: home, },
     { path: '/signup', component: signup, },
     { path: '/login', component: login }
   ]
