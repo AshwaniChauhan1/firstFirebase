@@ -13,11 +13,11 @@ const router = new Router({
   ]
 })
 
-// router.beforeEach((to, from, next) => {
-//   if (to.path === '/' && localStorage.getItem('token') === "") {
-//     next({ path: "/login" });
-//   } else {
-//     next()
-//   }
-// })
+router.beforeEach((to, from, next) => {
+  if (to.path === '/' && localStorage.getItem('token') === "") {
+    next({ path: "/login" });
+  } else {
+    next()
+  }
+})
 export default router
