@@ -45,7 +45,7 @@ export default {
     ...mapActions({
       loginUser: "loginData/loginUser"
     })
-  }
+  },
 };
 </script>
 

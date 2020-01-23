@@ -23,6 +23,7 @@ const actions = {
             state.loginLoading = true;
             firebase.auth().signInWithEmailAndPassword(state.login.email, state.login.password).catch(function (error) {
                 state.loginError = error.message;
+                state.loginLoading = false;
             });
             firebase.auth().onAuthStateChanged(function (user) {
                 if (user) {
@@ -31,6 +32,9 @@ const actions = {
                     localStorage.token = user.refreshToken;
                     state.login.email = "";
                     state.login.password = "";
+                    state.loginError = "";
+                    //eslint-disable-next-line
+                    console.log(user);
                 }
             });
         }
@@ -45,8 +49,14 @@ const actions = {
         router.push("/login");
     },
     logout() {
-        localStorage.token = "";
-        router.push("/login");
+        firebase.auth().signOut().then(function () {
+            localStorage.token = "";
+            router.push("/login");
+        }).catch(function (error) {
+          //eslint-disable-next-line
+          console.log(error);
+        });
+
     },
 }
 

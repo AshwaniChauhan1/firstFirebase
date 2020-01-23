@@ -4,27 +4,18 @@ import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import store from "./store";
-import firebase from 'firebase/app'
 import "firebase/firestore";
+import "firebase/auth";
 import router from "./router";
+import Firebase from 'firebase/app'
+import credentials from './firebase/credentials'
 
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCQyGdfMSkIxipEX6ikUn2gFCfNzbQ0GjU",
-  authDomain: "firstfirebases.firebaseapp.com",
-  databaseURL: "https://firstfirebases.firebaseio.com",
-  projectId: "firstfirebases",
-  storageBucket: "firstfirebases.appspot.com",
-  messagingSenderId: "45320671798",
-  appId: "1:45320671798:web:12f4e3607d7c0db521fe97",
-  measurementId: "G-HFK5HY7NNS"
-};
-
-firebase.initializeApp(firebaseConfig);
+ Firebase.initializeApp(credentials.config)
 
 
 new Vue({

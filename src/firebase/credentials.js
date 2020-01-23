@@ -1,5 +1,5 @@
 export default {
-    config = {
+    config : {
         apiKey: "AIzaSyCQyGdfMSkIxipEX6ikUn2gFCfNzbQ0GjU",
         authDomain: "firstfirebases.firebaseapp.com",
         databaseURL: "https://firstfirebases.firebaseio.com",
