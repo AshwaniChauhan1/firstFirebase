@@ -33,8 +33,6 @@ const actions = {
                     state.login.email = "";
                     state.login.password = "";
                     state.loginError = "";
-                    //eslint-disable-next-line
-                    console.log(user);
                 }
             });
         }
