@@ -13,10 +13,7 @@
     </ul>
     <h3>Essential Links</h3>
     <ul>
-<<<<<<< HEAD
       
-=======
->>>>>>> f26e4823753c16ce13229a9cc480c63be1f02eb9
       <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
       <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
       <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
