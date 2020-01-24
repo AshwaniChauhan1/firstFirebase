@@ -33,6 +33,10 @@ const actions = {
                     state.login.email = "";
                     state.login.password = "";
                     state.loginError = "";
+                    localStorage.photoUrl =""
+                    localStorage.displayName = user.displayName;
+                    localStorage.email = user.email;
+                    localStorage.uid = user.uid; 
                 }
             });
         }
@@ -49,6 +53,9 @@ const actions = {
     logout() {
         firebase.auth().signOut().then(function () {
             localStorage.token = "";
+            localStorage.displayName = "";
+            localStorage.email = "";
+            localStorage.uid = ""; 
             router.push("/login");
         }).catch(function (error) {
           //eslint-disable-next-line

@@ -6,6 +6,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import store from "./store";
 import "firebase/firestore";
 import "firebase/auth";
+import 'firebase/storage';
 import router from "./router";
 import Firebase from 'firebase/app'
 import credentials from './firebase/credentials'
@@ -15,7 +16,7 @@ Vue.use(IconsPlugin)
 
 Vue.config.productionTip = false;
 
- Firebase.initializeApp(credentials.config)
+Firebase.initializeApp(credentials.config)
 
 
 new Vue({
