@@ -17,16 +17,24 @@
                 accept="image/*"
               />
             </div>
-            <div class="py-3">
-              <b-button variant="primary" v-if="imageData!=null" @click="onUpload">Upload Pic</b-button>
+            <div v-if="imageData!=null" class="py-3">
+              <b-progress class="mb-3" :value="uploadValue" :max="max" show-progress animated></b-progress>
+              <b-button variant="primary" @click="onUpload">Upload Pic</b-button>
             </div>
           </div>
           <b-row class="justify-content-lg-center py-3 mt-3 border shadow">
             <b-col lg="5" md="5" class="d-flex justify-content-center">
               <div>
-                <div>
-                  <img class="preview img-fluid" :src="picture" width="200" height="200" />
+                <div class="pb-3">
+                  <img :src="picture" width="200" height="200" />
                 </div>
+                <b-progress
+                  v-if="picture !=='' && editImageData!=null"
+                  :value="changedPicValue"
+                  :max="max"
+                  show-progress
+                  animated
+                ></b-progress>
                 <div class="d-flex justify-content-center pt-3">
                   <div
                     class="file btn btn-primary fileBrowseBtn"
@@ -71,9 +79,10 @@ export default {
       imageData: null,
       editImageData: null,
       uploadValue: 0,
+      changedPicValue: 0,
       userEmail: localStorage.email,
-      picture: localStorage.photoUrl
-      //   pictures:""
+      picture: localStorage.photoUrl,
+      max: 100
     };
   },
   computed: {
@@ -84,16 +93,16 @@ export default {
       this.uploadValue = 0;
       this.picture = "";
       this.imageData = event.target.files[0];
-      this.profilePic = this.imageData.name;
     },
     editImage(event) {
+      this.changedPicValue = 0;
       this.editImageData = event.target.files[0];
     },
     onUpload() {
       this.picture = "";
       var storageRef = firebase.storage().ref();
       var imagesRef = storageRef
-        .child(`${localStorage.uid}/${this.imageData.name}`)
+        .child(`${localStorage.email}/profile.jpg`)
         .put(this.imageData);
       imagesRef.on(
         `state_changed`,
@@ -116,30 +125,22 @@ export default {
     onEdit() {
       var storageRef = firebase.storage().ref();
       var imagesRef = storageRef
-        .child(`${localStorage.uid}/${this.editImageData.name}`)
+        .child(`${localStorage.email}/profile.jpg`)
         .put(this.editImageData);
-      imagesRef.snapshot.ref.getDownloadURL().then(url => {
-        localStorage.photoUrl = url;
-        this.picture = localStorage.photoUrl;
-        this.editImageData = null;
+      imagesRef.on(`state_changed`, snapshot => {
+        this.changedPicValue =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         //eslint-disable-next-line
-        console.log(url);
+        console.log(this.changedPicValue);
+        imagesRef.snapshot.ref.getDownloadURL().then(url => {
+          localStorage.photoUrl = url;
+          this.picture = localStorage.photoUrl;
+          if (this.changedPicValue === this.max) {
+            this.editImageData = null;
+          }
+        });
       });
     }
-  },
-  mounted() {
-    var storage = firebase.storage();
-    var pathReference = storage.ref(`${localStorage.uid}/profile.png`);
-    pathReference
-      .getDownloadURL()
-      .then(function(url) {
-        //eslint-disable-next-line
-        console.log(url);
-      })
-      .catch(function(error) {
-        //eslint-disable-next-line
-        console.log(error);
-      });
   }
 };
 </script>

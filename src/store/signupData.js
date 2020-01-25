@@ -19,11 +19,11 @@ const actions = {
         } else if (!res) {
             state.signUpError = "*Invalid email";
         } else {
-             state.signupLoading = true;
+            state.signupLoading = true;
             firebase.auth().createUserWithEmailAndPassword(state.signup.email, state.signup.password).then(() => {
                 router.push("/login");
                 state.signupLoading = false;
-              }).catch(function (error) {
+            }).catch(function (error) {
                 state.signUpError = error.message;
                 state.signupLoading = false;
             });
@@ -37,7 +37,7 @@ const actions = {
     },
     validemail({ state }) {
         //eslint-disable-next-line
-        var re = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(state.signup.email);
     }
 }
